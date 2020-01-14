@@ -1,21 +1,7 @@
 {% extends 'layout.html' %} {% block body %}
-<form method="POST" action="">
-  <div class="input-field">
-    <input
-      placeholder="Display Name"
-      id="display_name"
-      type="text"
-      name="name"
-    />
-  </div>
-  <div class="input-field">
-    <input
-      placeholder="Password"
-      id="display_name"
-      type="password"
-      name="password"
-    />
-  </div>
-  <p><input type="submit" class="btn btn-primary" value="Submit" /></p>
-</form>
+<div>
+  <a href="login" class="btn btn-primary">Login</a>
+  <a href="register" class="btn btn-primary">Register</a>
+</div>
+
 {% endblock %}

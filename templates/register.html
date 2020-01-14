@@ -1,0 +1,24 @@
+{% extends 'layout.html' %} {% block body %}
+<form method="POST" action="">
+  <div class="input-field">
+    <input
+      placeholder="Display Name"
+      id="display_name"
+      type="text"
+      name="name"
+    />
+  </div>
+  <div class="input-field">
+    <input
+      placeholder="Password"
+      id="display_name"
+      type="password"
+      name="password"
+    />
+  </div>
+  <button class="btn waves-effect waves-light" type="submit" name="action">
+    Submit
+    <i class="material-icons right">send</i>
+  </button>
+</form>
+{% endblock %}

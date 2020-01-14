@@ -1,0 +1,25 @@
+{% extends 'layout.html' %} {% block body %}
+<div>
+  <ul class="collection with-header">
+    <li class="collection-header"><h4>Channel Names</h4></li>
+    <li class="collection-item">1</li>
+    <li class="collection-item">2</li>
+    <li class="collection-item">3</li>
+  </ul>
+  <form method="POST" action="">
+    <div class="input-field">
+      <input
+        placeholder="Enter Channel Name"
+        id="channel_name"
+        type="text"
+        name="channel_name"
+      />
+    </div>
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Create Channel
+      <i class="material-icons right">send</i>
+    </button>
+  </form>
+</div>
+
+{% endblock %}
