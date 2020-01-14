@@ -33,13 +33,6 @@ class Channel(db.Model):
         db.session.add(u)
         db.session.commit()
 
-class Message(db.Model):
-    __tablename__ = "messages"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    channel_id = db.Column(db.Integer, db.ForeignKey("channels.id"), nullable=False)
-    message = db.Column(db.String, nullable=False)
-
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -50,3 +43,17 @@ class User(db.Model):
     def add_user(self):
         db.session.add(self)
         db.session.commit()
+
+class User_has_channel(db.Model):
+    __tablename__ = "users_has_channels"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey("channels.id"), nullable=False)
+
+class Message(db.Model):
+    __tablename__ = "messages"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey("channels.id"), nullable=False)
+    message = db.Column(db.String, nullable=False)
+
