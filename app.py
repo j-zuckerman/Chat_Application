@@ -65,11 +65,17 @@ def channels():
 
     if request.method == 'POST':
         channel_name = form.get('channel_name')
-        
+
     return render_template("channels.html")
 
+@socketio.on("create channel")
+def socket_create_channel(data):
+    channel = Channel.query.filter_by(name=data['name']).first()
+    if channel == None:
+        c = Channel(name=data['name'])
+        c = c.add_channel()
+        data['id'] = c.id
+        emit("channel created", data, broadcast=True)    
 
-
-if __name__ == ' __main__':
-    #app.debug = True
-    app.run()
+if __name__ == '__main__':
+    socketio.run(app)
