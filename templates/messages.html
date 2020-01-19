@@ -9,7 +9,7 @@
     <li class="collection-header"><h4>{{channel.name}}</h4></li>
     {% for message in channel.messages %}
     <li class="collection-item">
-      {{message.message}}
+      {{message.message}} - {{user_names[loop.index]}}
     </li>
     {% endfor %}
   </ul>

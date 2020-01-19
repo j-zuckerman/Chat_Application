@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(data);
     var messages = document.getElementById('messages');
     var li = document.createElement('li');
-    li.innerHTML = data['message'];
+    li.innerHTML = data['message'] + '- ' + data['name'];
+
     li.classList.add('collection-item');
     messages.appendChild(li);
 

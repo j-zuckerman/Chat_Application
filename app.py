@@ -66,17 +66,24 @@ def login():
 
 @app.route("/channels", methods=['GET', 'POST'])
 def channels():
+    
     channels = Channel.query.all()
+
 
     return render_template("channels.html", channels = channels)
 
 @app.route("/channel/<string:id>")
 def channel(id):
-        
+    user_names = []
     channel = Channel.query.get(id)
     
+    for message in channel.messages:
+        user_name = User.query.filter_by( id = message.user_id).first().name
+        user_names.append(user_name)
     
-    return render_template("messages.html", channel=channel)
+    print(user_names)
+    
+    return render_template("messages.html", channel=channel, user_names = user_names)
 
 @socketio.on("create channel")
 def socket_create_channel(data):
@@ -94,6 +101,8 @@ def socket_send_message(data):
     channel = Channel.query.get(channel_id)
     channel.add_message(message, session['user'].id)
     data['user_id'] = session['user'].id
+    u =  User.query.filter_by(id = data['user_id']).first()
+    data['name'] = u.name
     emit("message received", data, broadcast=True)
 
 if __name__ == '__main__':
