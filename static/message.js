@@ -5,26 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   socket.on('connect', () => {
+    console.log('connected');
     document.querySelectorAll('button').forEach(button => {
       button.onclick = () => {
-        const name = document.getElementById('channel_name').value;
-        document.getElementById('channel_name').value = '';
-        socket.emit('create channel', { name: name });
+        const message = document.getElementById('message').value;
+        const id = window.location.pathname.split('/').pop();
+        document.getElementById('message').value = '';
+        socket.emit('send message', { message: message, id: id });
         return false;
       };
     });
   });
 
-  socket.on('channel created', data => {
+  socket.on('message received', data => {
     console.log(data);
-    var channels = document.getElementById('channels');
+    var messages = document.getElementById('messages');
     var li = document.createElement('li');
-    var link = document.createElement('a');
-    link.innerHTML = data['name'];
-    link.setAttribute('href', 'channel/' + data['id']);
-    li.appendChild(link);
+    li.innerHTML = data['message'];
     li.classList.add('collection-item');
-    channels.appendChild(li);
+    messages.appendChild(li);
 
     return false;
   });

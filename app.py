@@ -61,12 +61,17 @@ def login():
 
 @app.route("/channels", methods=['GET', 'POST'])
 def channels():
-    form = request.form
+    channels = Channel.query.all()
 
-    if request.method == 'POST':
-        channel_name = form.get('channel_name')
+    return render_template("channels.html", channels = channels)
 
-    return render_template("channels.html")
+@app.route("/channel/<string:id>")
+def channel(id):
+        
+    channel = Channel.query.get(id)
+    
+    
+    return render_template("messages.html", channel=channel)
 
 @socketio.on("create channel")
 def socket_create_channel(data):
@@ -76,6 +81,14 @@ def socket_create_channel(data):
         c = c.add_channel()
         data['id'] = c.id
         emit("channel created", data, broadcast=True)    
+
+@socketio.on("send message")
+def socket_send_message(data):
+    channel_id = data["id"]
+    message = data["message"]
+    channel = Channel.query.get(channel_id)
+    
+    emit("message received", data, broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app)
