@@ -1,6 +1,7 @@
 import os
 
-from flask import Flask, url_for, session, redirect, render_template, request
+from flask import Flask, url_for, session, redirect, render_template, request, jsonify
+from flask_session import Session
 from flask_socketio import SocketIO, emit
 from models import *
 from flask_heroku import Heroku
@@ -14,6 +15,10 @@ db = SQLAlchemy(app)
 app.secret_key = os.urandom(24)
 socketio = SocketIO(app)
 
+# Configure session to use filesystem
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 @app.route("/")
 def index():
@@ -49,15 +54,15 @@ def login():
 
         print(name)
         print(password)
-        u = User.query.filter_by(name = name).first()
-
+        u = User.query.filter_by(name=name).first()
+        print(u)
         if u is None or u.password != password:
             return render_template("error.html", message="Incorrect login information")
         else:
             session["user"] = u
             return redirect(url_for("channels"))
         
-    return render_template("register.html")
+    return render_template("login.html")
 
 @app.route("/channels", methods=['GET', 'POST'])
 def channels():
@@ -87,7 +92,8 @@ def socket_send_message(data):
     channel_id = data["id"]
     message = data["message"]
     channel = Channel.query.get(channel_id)
-    
+    channel.add_message(message, session['user'].id)
+    data['user_id'] = session['user'].id
     emit("message received", data, broadcast=True)
 
 if __name__ == '__main__':
