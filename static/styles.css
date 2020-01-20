@@ -1,0 +1,27 @@
+.chat {
+  border: solid 1px #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.messages {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+
+  list-style: none;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.message {
+  display: inline-block;
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 4px;
+  font-family: Helvetica, Arial, sans-serif;
+
+  background-color: #eee;
+}

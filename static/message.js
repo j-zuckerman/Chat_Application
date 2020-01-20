@@ -20,12 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.on('message received', data => {
     console.log(data);
     var messages = document.getElementById('messages');
-    var li = document.createElement('li');
-    li.innerHTML = data['message'] + '- ' + data['name'];
+    var m = document.createElement('li');
+    var name = document.createElement('li');
 
-    li.classList.add('collection-item');
-    messages.appendChild(li);
+    name.innerHTML = data['name'];
+    m.innerHTML = data['message'];
+    m.classList.add('message');
 
+    messages.appendChild(name);
+    messages.appendChild(m);
     return false;
   });
 });

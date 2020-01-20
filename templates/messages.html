@@ -5,14 +5,17 @@
 ></script>
 {% endblock %} {% block body %}
 <div>
-  <ul class="collection with-header" id="messages">
-    <li class="collection-header"><h4>{{channel.name}}</h4></li>
-    {% for message in channel.messages %}
-    <li class="collection-item">
-      {{message.message}} - {{user_names[loop.index]}}
-    </li>
-    {% endfor %}
-  </ul>
+  <div class="chat">
+    <ul class="messages" id ="messages">
+      <h4>{{channel.name}}</h4>
+      {% for message in channel.messages %}
+      <li> {{user_names[loop.index]}}</li>
+      <li class="message">
+        {{message.message}} 
+      </li>
+      {% endfor %}
+    </div>
+  </div>
   <form method="POST" action="">
     <div class="input-field">
       <input
